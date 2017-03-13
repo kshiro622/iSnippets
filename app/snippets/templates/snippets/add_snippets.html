@@ -1,7 +1,17 @@
-{% extends 'snippets/layout.html' %} {% block title %} Add {% endblock %} {% block content %}
-<h1> Add Snippets </h1>
-<hr />
-<p>
-    {{data}}
-</p>
+{% extends 'snippets/layout.html' %} {% block title %} Add Snippets {% endblock %} {% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>Add Snippets</h1>
+    </div>
+</div>
+
+<form method="POST" action="{% url 'snippets:add' %}">
+    <label>Title</label><input name="title">
+    <label>Language</label><input name="language">
+    <label>Description</label><input name="description">
+    <label>Snippet</label><input name="snippet">
+    <button class="btn btn-success" type="submit">Save</button>{% csrf_token %}
+</form>
+
+
 {% endblock %}

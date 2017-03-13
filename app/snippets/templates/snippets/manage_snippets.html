@@ -1,7 +1,21 @@
-{% extends 'snippets/layout.html' %} {% block title %} Manage {% endblock %} {% block content %}
-<h1> Manage Snippets </h1>
-<hr />
+{% extends 'snippets/layout.html' %} {% block title %} Manage Snippets {% endblock %} {% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>Manage Snippets</h1>
+    </div>
+</div>
 <p>
-    {{data}}
+    {% for snippet in snippets %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{snippet.title}}</h3>
+        </div>
+        <div class="panel-body">
+            <p>Language: {{snippet.language}}</p>
+            <p>Description: {{snippet.description}}</p>
+            <p>Snippet: {{snippet.snippet}}</p>
+        </div>
+    </div>
+    {% endfor %}
 </p>
 {% endblock %}
