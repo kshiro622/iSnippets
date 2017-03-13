@@ -20,9 +20,16 @@ def add(request):
 #route to view and manage snippets
 def manage(request):
 
-    snippets = Snippet.objects.all()
+    if request.method == 'GET':
+        snippets = Snippet.objects.all()
 
-    context = {
-        'snippets': snippets
-    }
-    return render(request, 'snippets/manage_snippets.html', context)
+        context = {
+            'snippets': snippets
+        }
+        return render(request, 'snippets/manage_snippets.html', context)
+    
+def delete(request, snippet_id):
+    if request.method == 'DELETE':
+        snippet = Snippet.objects.get(id=snippet_id).delete()
+        return render(request, 'snippets/manage_snippets.html')
+    
