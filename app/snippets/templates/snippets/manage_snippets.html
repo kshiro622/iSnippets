@@ -32,10 +32,10 @@
     {% for snippet in snippets %}
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{{snippet.title}}</h3>
+            <h3 class="panel-title">{{snippet.title}} (Id: {{snippet.id}})</h3>
             <div class="btn-group btn-group-sm pull-right" role="group">
                 <div class="btn-group" role="group">
-                    <button class="btn-update btn btn-info" type="submit" data-id={{snippet.id}} data-title={{snippet.title}} data-language={{snippet.language}} data-description={{snippet.description}} data-snippet={{snippet.snippet}}>Update</button>
+                    <button class="btn-update btn btn-info" type="submit" data-id={{snippet.id}}>Update</button>
                 </div>
                 <div class="btn-group" role="group">
                     <button class="btn-delete btn btn-danger" type="submit" data-id={{snippet.id}}>Delete</button>
@@ -58,24 +58,25 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"></h4>
+                    <p>Only fill in the fields you would like to update.</p>
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="">
                         <div class="form-group">
                             <label for="title-input">Title</label>
-                            <input type="text" class="form-control" id="title-input" name="snippet_title" value="" placeholder="Title">
+                            <input type="text" class="form-control" id="title-input" name="snippet_title" value="" placeholder="Updated Title">
                         </div>
                         <div class="form-group">
                             <label for="lang-input">Language</label>
-                            <input type="text" class="form-control" id="lang-input" name="snippet_lang" value="" placeholder="Language">
+                            <input type="text" class="form-control" id="lang-input" name="snippet_lang" value="" placeholder="Updated Language">
                         </div>
                         <div class="form-group">
                             <label for="desc-input">Description</label>
-                            <input type="text" class="form-control" id="desc-input" name="snippet_desc" value="" placeholder="Description">
+                            <input type="text" class="form-control" id="desc-input" name="snippet_desc" value="" placeholder="Updated Description">
                         </div>
                         <div class="form-group">
                             <label for="snippet-input">Snippet</label>
-                            <input type="text" class="form-control" id="snippet-input" name="snippet" value="" placeholder="Snippet">
+                            <textarea type="text" class="form-control" id="snippet-input" name="snippet" value="" placeholder="Updated Snippet"></textarea>
                         </div>
                         <button class="btn btn-success" id="save-btn" type="submit">Save</button>{% csrf_token %}
                     </form>
@@ -127,21 +128,7 @@
         $('.btn-update').on('click', function() {
             // Grab data from data attributes and store in variables
             var snippetId = $(this).attr('data-id');
-            var snippetTitle = $(this).attr('data-title');
-            var snippetLang = $(this).attr('data-language');
-            var snippetDesc = $(this).attr('data-description');
-            var snippet = $(this).attr('data-snippet');
-            // Update modal title
-            $('.modal-title').html('Update Snippet Titled "' + snippetTitle + '"');
-            // Update placeholders and values
-            $('#title-input').attr('value', snippetTitle);
-            $('#title-input').attr('placeholder', snippetTitle);
-            $('#lang-input').attr('value', snippetLang);
-            $('#title-input').attr('placeholder', snippetLang);
-            $('#desc-input').attr('value', snippetDesc);
-            $('#title-input').attr('placeholder', snippetDesc);
-            $('#snippet-input').attr('value', snippet);
-            $('#title-input').attr('placeholder', snippet);
+            $('.modal-title').html('Update Snippet with Id: ' + snippetId);
             // Update button data-id
             $('#save-btn').attr('data-id', snippetId);
             // Show modal
@@ -155,8 +142,6 @@
             var snippetLang = $('#lang-input').val();
             var snippetDesc = $('#desc-input').val();
             var snippet = $('#snippet-input').val();
-
-            console.log(snippet);
 
             $.ajax({
                 type: 'POST',

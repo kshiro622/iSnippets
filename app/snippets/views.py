@@ -28,12 +28,22 @@ def home(request, snippet_id):
         return render(request, 'snippets/manage_snippets.html', context)
     
     elif request.method == 'POST':
-        Snippet.objects.filter(id=snippet_id).update(
-            title=request.POST['snippet_title'],
-            language=request.POST['snippet_lang'],
-            description=request.POST['snippet_desc'],
-            snippet=request.POST['snippet']
-        )
+        if len(request.POST['snippet_title']) > 0:
+            Snippet.objects.filter(id=snippet_id).update(
+                title=request.POST['snippet_title']
+            )
+        if len(request.POST['snippet_lang']) > 0:
+            Snippet.objects.filter(id=snippet_id).update(
+                language=request.POST['snippet_lang']
+            )
+        if len(request.POST['snippet_desc']) > 0:
+            Snippet.objects.filter(id=snippet_id).update(
+                description=request.POST['snippet_desc']
+            )
+        if len(request.POST['snippet']) > 0:
+            Snippet.objects.filter(id=snippet_id).update(
+                snippet=request.POST['snippet']
+            )
         return redirect('/home/')
 
 def delete(request, snippet_id):
