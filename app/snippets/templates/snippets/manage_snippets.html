@@ -126,10 +126,11 @@
         });
 
         $('.btn-update').on('click', function() {
-            // Grab data from data attributes and store in variables
+            // Get id from data attribute
             var snippetId = $(this).attr('data-id');
+            // Update modal title
             $('.modal-title').html('Update Snippet with Id: ' + snippetId);
-            // Update button data-id
+            // Update save button data-id
             $('#save-btn').attr('data-id', snippetId);
             // Show modal
             $('.modal').modal('show');

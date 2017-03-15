@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
 from .models import Snippet
-from django.http import HttpResponse, request
+from django.http import HttpResponse, request, JsonResponse
 
 # Create your views here.
 
 # route to add snippets
 def add(request):
-    if request.method == 'POST':
-
+    if request.method == 'GET':
+        return render(request, 'snippets/add_snippets.html', {})
+    elif request.method == 'POST':
         Snippet(
             title=request.POST['title'],
             language=request.POST['language'],
@@ -15,7 +16,7 @@ def add(request):
             description=request.POST['description']
         ).save()
 
-    return render(request, 'snippets/add_snippets.html', {})
+        return redirect ('/home/')
 
 #route to view and manage snippets
 def home(request, snippet_id):
@@ -50,5 +51,4 @@ def delete(request, snippet_id):
     Snippet(id = snippet_id).delete()
     return HttpResponse({'success'})
         
-# def update(request, snippet_id):
     
